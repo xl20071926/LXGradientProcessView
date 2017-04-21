@@ -15,6 +15,7 @@
 @interface ViewController ()
 
 @property (nonatomic, strong) LXGradientProcessView *processView;
+@property (nonatomic, strong) CALayer *colorLayer;
 
 @end
 
@@ -23,6 +24,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.colorLayer = [CALayer layer];
+    [self.colorLayer setFrame:self.view.frame];
+//    [self.colorLayer setBackgroundColor:[UIColor purpleColor].CGColor];
+//    [self.view.layer addSublayer:self.colorLayer];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapClick)];
+    [self.view addGestureRecognizer:tap];
     
     // 渐变进度条
     self.processView = [[LXGradientProcessView alloc] initWithFrame:CGRectMake(20.f, 100.f, SCREEN_WIDTH - 40.f, 45.f)];
@@ -41,9 +50,20 @@
 
 - (void)onStareButtonClick {
     
-    self.processView.percent = 100.f;
+    self.processView.percent = 80.f;
 }
 
+- (void)onTapClick {
+    
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    [CATransaction setAnimationDuration:2.0];
+//    [self.colorLayer setBackgroundColor:[UIColor purpleColor].CGColor];
+    [self.view setBackgroundColor:[UIColor purpleColor]];
+    [CATransaction commit];
+    
+//    [self.view.layer setPosition:CGPointMake(100, 100)];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
